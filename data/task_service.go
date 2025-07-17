@@ -65,14 +65,30 @@ func DeleteTaskByID(id string) error {
 
 }
 
-// func UpdateTaskByID(id int, updatedTask models.Task) bool {
-// 	for i, task := range Tasks {
-// 		if task.ID == id {
-// 			updatedTask.ID = id
-// 			Tasks[i] = updatedTask
-// 			return true
+func UpdateTaskByID(id string, updatedTask models.Task) error{
+	objectID,err:= primitive.ObjectIDFromHex(id)
 
-// 		}
-// 	}
-// 	return false
-// }
+	if err!=nil{
+		return errors.New("invalid task Id")
+	}
+	filter := bson.D{{Key:"_id",Value:objectID}}
+
+	update :=bson.D{
+		{Key: "$set",Value:bson.D{
+			{Key:"title",Value:updatedTask.Title},
+			{Key: "description", Value: updatedTask.Description},
+			{Key: "status", Value: updatedTask.Status},
+
+		}},
+	}
+	result,err:=db.TaskCollection.UpdateOne(context.TODO(),filter,update)
+
+	if err !=nil{
+		return err
+	}
+	if result.MatchedCount==0{
+		return errors.New("no task found ")
+	}
+	return nil
+
+}

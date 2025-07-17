@@ -59,25 +59,22 @@ func DeleteTaskByID(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "task deleted"})
 
 }
-// func UpdateTaskByID(c *gin.Context) {
-// 	idp := c.Param("id")
-// 	id, err := strconv.Atoi(idp)
-// 	if err != nil {
-// 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-// 		return
-// 	}
+func UpdateTaskByID(c *gin.Context) {
+	id := c.Param("id")
+	
+	
 
-// 	var updatedTask models.Task
-// 	if err := c.ShouldBindJSON(&updatedTask); err != nil {
-// 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
+	var updatedTask models.Task
+	if err := c.ShouldBindJSON(&updatedTask); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-// 	ok := data.UpdateTaskByID(id, updatedTask)
-// 	if !ok {
-// 		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "task not found"})
-// 		return
-// 	}
-// 	c.IndentedJSON(http.StatusOK, updatedTask)
+	err := data.UpdateTaskByID(id, updatedTask)
+	if err !=nil{
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "task not found"})
+		return
+	}
+	c.IndentedJSON(http.StatusOK, updatedTask)
 
-// }
+}
