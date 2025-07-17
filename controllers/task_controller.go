@@ -46,22 +46,19 @@ func AddTask(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newTask)
 }
 
-// func DeleteTaskByID(c *gin.Context) {
-// 	idp := c.Param("id")
-// 	id, err := strconv.Atoi(idp)
+func DeleteTaskByID(c *gin.Context) {
+	id := c.Param("id")
+	
 
-// 	if err != nil {
-// 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "invalid ID"})
-// 		return
-// 	}
-// 	deleted := data.DeleteTaskByID(id)
-// 	if !deleted {
-// 		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "task not found"})
-// 		return
-// 	}
-// 	c.IndentedJSON(http.StatusOK, gin.H{"message": "task deleted"})
+	
+	err := data.DeleteTaskByID(id)
+	if err !=nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "task not found"})
+		return
+	}
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "task deleted"})
 
-// }
+}
 // func UpdateTaskByID(c *gin.Context) {
 // 	idp := c.Param("id")
 // 	id, err := strconv.Atoi(idp)

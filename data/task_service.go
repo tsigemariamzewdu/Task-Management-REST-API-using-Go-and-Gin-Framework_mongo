@@ -48,16 +48,22 @@ func AddTask(task models.Task) error {
 }
 
 
-// func DeleteTaskByID(id int) bool {
-// 	for i, task := range Tasks {
-// 		if task.ID == id {
-// 			Tasks = append(Tasks[:i], Tasks[i+1:]...)
-// 			return true
-// 		}
+func DeleteTaskByID(id string) error {
+	objectID,err:= primitive.ObjectIDFromHex(id)
 
-// 	}
-// 	return false
-// }
+	if err!=nil{
+		return errors.New("invalid task Id")
+	}
+	res,err:=db.TaskCollection.DeleteOne(context.TODO(),bson.M{"_id":objectID})
+	if err!=nil{
+		return err
+	}
+	if res.DeletedCount==0{
+		return errors.New("task not found")
+	}
+	return nil
+
+}
 
 // func UpdateTaskByID(id int, updatedTask models.Task) bool {
 // 	for i, task := range Tasks {
