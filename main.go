@@ -4,10 +4,12 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"task_management/db"
 	"task_management/router"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -15,7 +17,12 @@ import (
 
 
 func main() {
-	clientOptions := options.Client().ApplyURI("mongodb+srv://tsigemariamzewdu20:Bbirhan2121@taskgo.men60cg.mongodb.net/")
+	err:= godotenv.Load()
+	if err!=nil{
+		log.Fatal("error loading env")
+	}
+	mongouri:=os.Getenv("mongo_url")
+	clientOptions := options.Client().ApplyURI(mongouri)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
