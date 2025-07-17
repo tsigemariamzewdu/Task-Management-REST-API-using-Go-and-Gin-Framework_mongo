@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"task_management/db"
 	"task_management/router"
@@ -24,6 +25,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("connected to mongoDB")
 	db.TaskCollection = client.Database("taskmanager").Collection("tasks")
 	app := gin.Default()
 	router.SetUpRoutes(app)

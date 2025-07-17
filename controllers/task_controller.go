@@ -4,6 +4,7 @@ import (
 	"net/http"
 	// "strconv"
 	"task_management/data"
+	"task_management/models"
 	// "task_management/models"
 
 	"github.com/gin-gonic/gin"
@@ -30,20 +31,20 @@ func GetTaskByID(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, task)
 }
 
-// func AddTask(c *gin.Context) {
-// 	var newTask models.Task
+func AddTask(c *gin.Context) {
+	var newTask models.Task
 
-// 	if err := c.ShouldBindJSON(&newTask); err != nil {
-// 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	ok := data.AddTask(newTask)
-// 	if !ok {
-// 		c.IndentedJSON(http.StatusConflict, gin.H{"error": "task already exits"})
-// 		return
-// 	}
-// 	c.IndentedJSON(http.StatusCreated, newTask)
-// }
+	if err := c.ShouldBindJSON(&newTask); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	err := data.AddTask(newTask)
+	if err !=nil  {
+		c.IndentedJSON(http.StatusConflict, gin.H{"error": "task already exits"})
+		return
+	}
+	c.IndentedJSON(http.StatusCreated, newTask)
+}
 
 // func DeleteTaskByID(c *gin.Context) {
 // 	idp := c.Param("id")

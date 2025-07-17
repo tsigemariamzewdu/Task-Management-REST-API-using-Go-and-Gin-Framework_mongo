@@ -8,8 +8,8 @@ import (
 
 func SetUpRoutes(router *gin.Engine) {
 	router.GET("/tasks", controllers.GetTasks)
-	// router.GET("/tasks/:id", controllers.GetTaskByID)
+	router.GET("/tasks/:id", controllers.GetTaskByID)
 	// router.PUT("/tasks/:id", controllers.UpdateTaskByID)
 	// router.DELETE("/tasks/:id", controllers.DeleteTaskByID)
-	// router.POST("/tasks", controllers.AddTask)
+	router.POST("/tasks", controllers.AddTask)
 }

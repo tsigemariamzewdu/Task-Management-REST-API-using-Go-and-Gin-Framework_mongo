@@ -42,25 +42,11 @@ func GetTaskByID(id string) (*models.Task, error) {
 
 }
 
-// func AddTask(task models.Task) bool {
+func AddTask(task models.Task) error {
+	_, err := db.TaskCollection.InsertOne(context.TODO(), task)
+	return err
+}
 
-// 	for _, t := range Tasks {
-// 		if t.Title == task.Title && t.Description == task.Description {
-// 			return false
-// 		}
-// 	}
-
-// 	var maxID int
-// 	for _, t := range Tasks {
-// 		if t.ID > maxID {
-// 			maxID = t.ID
-// 		}
-// 	}
-// 	task.ID = maxID + 1
-
-// 	Tasks = append(Tasks, task)
-// 	return true
-// }
 
 // func DeleteTaskByID(id int) bool {
 // 	for i, task := range Tasks {
